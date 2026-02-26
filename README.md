@@ -40,7 +40,7 @@ pip install -r requirements.txt
 
 ### 2. 放置文件
 
-将所有需要处理的原始PDF发票文件放入 `init_dir` 文件夹。
+将所有需要处理的原始PDF发票文件放入 `download_pdf` 文件夹。
 
 ### 3. 运行处理脚本
 
@@ -49,7 +49,7 @@ pip install -r requirements.txt
 python create_expense_report.py
 ```
 
-脚本运行完毕后，你会在 `merge` 文件夹中找到重命名后的PDF，并在根目录下找到 `报销单.xlsx` 文件。
+脚本运行完毕后，你会在 `merge_pdf` 文件夹中找到重命名后的PDF，并在根目录下找到 `报销单.xlsx` 文件。
 
 ### 4. (可选) 清理项目
 
