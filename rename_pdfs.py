@@ -11,6 +11,7 @@ PDF_DIRECTORY = 'merge_pdf'
 def rename_pdfs_by_travel_date():
     """
     Renames PDF files based on the extracted travel date found within them.
+    Handles filename conflicts by appending an incremental counter (_1, _2, etc.).
     """
     print(f"--- Starting PDF renaming process in: {PDF_DIRECTORY} ---\n")
 
@@ -45,16 +46,23 @@ def rename_pdfs_by_travel_date():
                     break # Found the date, no need to check other pages
             
             if extracted_date:
-                new_filename = f"{extracted_date}_打车.pdf"
-                new_path = os.path.join(PDF_DIRECTORY, new_filename)
+                base_filename = f"{extracted_date}_打车"
                 
-                # Check if a file with the new name already exists
-                if os.path.exists(new_path):
-                    print(f"  Skipped: A file named '{new_filename}' already exists.")
-                    continue
+                counter = 1
+                while True:
+                    # Start naming from _1, _2, ...
+                    new_filename = f"{base_filename}_{counter}.pdf"
+                    new_path = os.path.join(PDF_DIRECTORY, new_filename)
+                    
+                    if not os.path.exists(new_path):
+                        # Found an available name
+                        break
+                    
+                    # If name exists, increment counter and try the next one
+                    counter += 1
 
                 os.rename(old_path, new_path)
-                print(f"  Successfully renamed to '{new_filename}'")
+                print(f"  -> Renamed to '{new_filename}'")
             else:
                 print("  Skipped: Could not find '行程起止日期' in this file.")
 
